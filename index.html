@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metamorfosis Alam Semesta</title>
+    <style>
+        .cosmic-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, #0a0a2e 0%, #000000 70%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .animation-stage {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Stars Layer */
+        .stars-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 3s infinite ease-in-out;
+            box-shadow: 0 0 6px #ffffff;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Central Light - Opening Phase */
+        .central-light {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #ffffff 0%, #87ceeb 50%, transparent 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            animation: growLight 3s ease-out forwards;
+            box-shadow: 0 0 50px #87ceeb, 0 0 100px #4169e1;
+        }
+
+        @keyframes growLight {
+            0% { 
+                opacity: 0; 
+                width: 10px; 
+                height: 10px; 
+            }
+            50% { 
+                opacity: 0.7; 
+                width: 100px; 
+                height: 100px; 
+            }
+            100% { 
+                opacity: 1; 
+                width: 150px; 
+                height: 150px; 
+            }
+        }
+
+        /* Particles Layer */
+        .particles-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .phase-particles .particles-layer {
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            border-radius: 50%;
+            animation: spiralDance 4s infinite ease-in-out;
+        }
+
+        @keyframes spiralDance {
+            0% { 
+                transform: rotate(0deg) translateX(50px) scale(0.5);
+                opacity: 0;
+            }
+            25% { 
+                opacity: 1;
+                transform: rotate(90deg) translateX(100px) scale(1);
+            }
+            50% { 
+                transform: rotate(180deg) translateX(150px) scale(1.2);
+            }
+            75% { 
+                transform: rotate(270deg) translateX(100px) scale(1);
+            }
+            100% { 
+                transform: rotate(360deg) translateX(50px) scale(0.5);
+                opacity: 0.7;
+            }
+        }
+
+        .dna-helix {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            width: 200px;
+            height: 300px;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: dnaGrow 3s 1s ease-out forwards;
+        }
+
+        .dna-helix::before,
+        .dna-helix::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4, #45b7d1);
+            border-radius: 2px;
+            animation: dnaRotate 2s infinite linear;
+        }
+
+        .dna-helix::before {
+            left: 20%;
+            transform-origin: center;
+        }
+
+        .dna-helix::after {
+            right: 20%;
+            transform-origin: center;
+            animation-delay: 1s;
+        }
+
+        @keyframes dnaGrow {
+            0% { opacity: 0; transform: translateX(-50%) scaleY(0); }
+            100% { opacity: 1; transform: translateX(-50%) scaleY(1); }
+        }
+
+        @keyframes dnaRotate {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Organic Shapes Layer */
+        .organic-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .phase-organic .organic-layer {
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        .organic-shape {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            opacity: 0;
+            animation: organicMorph 5s infinite ease-in-out;
+        }
+
+        .organic-shape.leaf {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            border-radius: 0 100% 0 100%;
+            transform: rotate(45deg);
+        }
+
+        .organic-shape.droplet {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(135deg);
+        }
+
+        .organic-shape.bubble {
+            background: radial-gradient(circle, rgba(255,255,255,0.3), rgba(135,206,235,0.6));
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        @keyframes organicMorph {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.3) rotate(0deg); 
+            }
+            25% { 
+                opacity: 1; 
+                transform: scale(1.2) rotate(90deg); 
+            }
+            50% { 
+                transform: scale(1) rotate(180deg); 
+            }
+            75% { 
+                transform: scale(1.1) rotate(270deg); 
+            }
+            100% { 
+                opacity: 0.8; 
+                transform: scale(0.9) rotate(360deg); 
+            }
+        }
+
+        /* Complex Life Layer */
+        .life-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .phase-complex-life .life-layer {
+            animation: fadeIn 2s ease-in forwards;
+        }
+
+        .creature {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            opacity: 0;
+            animation: creatureFloat 6s infinite ease-in-out;
+        }
+
+        .creature.fish {
+            background: linear-gradient(45deg, rgba(255,105,180,0.7), rgba(65,105,225,0.7));
+            border-radius: 50% 10px 50% 10px;
+            position: relative;
+        }
+
+        .creature.fish::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border-left: 15px solid rgba(255,105,180,0.7);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            transform: translateY(-50%);
+        }
+
+        .creature.butterfly {
+            background: linear-gradient(45deg, #ff6b6b, #ffa500);
+            border-radius: 50% 10px 50% 10px;
+            position: relative;
+        }
+
+        .creature.butterfly::before,
+        .creature.butterfly::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(45deg, #ff1493, #ffd700);
+            border-radius: 50% 10px 80% 10px;
+        }
+
+        .creature.butterfly::before {
+            left: -15px;
+            top: -5px;
+            transform: rotate(-20deg);
+        }
+
+        .creature.butterfly::after {
+            right: -15px;
+            top: -5px;
+            transform: rotate(20deg);
+        }
+
+        .creature.plant {
+            background: linear-gradient(to top, #228b22, #32cd32);
+            border-radius: 10px 10px 50% 50%;
+            position: relative;
+        }
+
+        .creature.plant::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle, #ffd700, #ffa500);
+            border-radius: 50%;
+            transform: translateX(-50%);
+        }
+
+        @keyframes creatureFloat {
+            0% { 
+                opacity: 0; 
+                transform: translateY(0px) scale(0.8); 
+            }
+            25% { 
+                opacity: 1; 
+                transform: translateY(-20px) scale(1.1); 
+            }
+            50% { 
+                transform: translateY(-10px) scale(1); 
+            }
+            75% { 
+                transform: translateY(-30px) scale(1.2); 
+            }
+            100% { 
+                opacity: 0.9; 
+                transform: translateY(0px) scale(0.9); 
+            }
+        }
+
+        /* Mandala Layer - Cosmic Harmony */
+        .mandala-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .phase-cosmic-harmony .mandala-layer {
+            animation: fadeIn 3s ease-in forwards;
+        }
+
+        .mandala {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            animation: mandalaRotate 10s infinite linear;
+        }
+
+        .mandala-ring {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            animation: ringPulse 4s infinite ease-in-out;
+        }
+
+        .mandala-ring.ring-1 {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(255,215,0,0.8);
+            box-shadow: 0 0 30px rgba(255,215,0,0.6);
+        }
+
+        .mandala-ring.ring-2 {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border: 2px solid rgba(255,105,180,0.8);
+            box-shadow: 0 0 25px rgba(255,105,180,0.6);
+            animation-delay: 1s;
+        }
+
+        .mandala-ring.ring-3 {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            border: 2px solid rgba(135,206,235,0.8);
+            box-shadow: 0 0 20px rgba(135,206,235,0.6);
+            animation-delay: 2s;
+        }
+
+        .mandala-center {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            top: 40%;
+            left: 40%;
+            background: radial-gradient(circle, #ffffff, #ffd700);
+            border-radius: 50%;
+            box-shadow: 0 0 40px #ffffff;
+            animation: centerPulse 2s infinite ease-in-out;
+        }
+
+        @keyframes mandalaRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes ringPulse {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.1); 
+            }
+            100% { 
+                opacity: 0.7; 
+                transform: scale(1); 
+            }
+        }
+
+        @keyframes centerPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .aurora-effect {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            top: -50vh;
+            left: -50vw;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255,105,180,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(135,206,235,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(255,215,0,0.2) 0%, transparent 50%);
+            animation: auroraWave 8s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes auroraWave {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Phase Transitions */
+        .phase-opening .central-light {
+            animation-play-state: running;
+        }
+
+        .phase-particles .central-light {
+            animation: explodeLight 2s ease-out forwards;
+        }
+
+        @keyframes explodeLight {
+            0% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(3); 
+            }
+        }
+
+        .phase-ending .animation-stage > * {
+            animation: fadeOut 2s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .start-button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .start-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Inspirational Text Styles */
+        .inspiration-text {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            font-weight: 300;
+            text-align: center;
+            opacity: 0;
+            z-index: 100;
+            text-shadow: 0 0 20px rgba(255,255,255,0.8);
+            max-width: 80%;
+            line-height: 1.6;
+        }
+
+        .inspiration-text.show {
+            animation: textFadeIn 3s ease-in-out forwards;
+        }
+
+        .inspiration-text.hide {
+            animation: textFadeOut 2s ease-in-out forwards;
+        }
+
+        @keyframes textFadeIn {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(20px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(0); 
+            }
+        }
+
+        @keyframes textFadeOut {
+            0% { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(0); 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(-20px); 
+            }
+        }
+
+        @media (max-width: 768px) {
+            .inspiration-text {
+                font-size: 18px;
+                top: 15%;
+                max-width: 90%;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mandala {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .dna-helix {
+                width: 150px;
+                height: 200px;
+            }
+            
+            .organic-shape {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .creature {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-container">
+        <div class="animation-stage" id="animationStage">
+            <!-- Inspirational Text -->
+            <div class="inspiration-text" id="inspirationText"></div>
+
+            <!-- Background stars - always present -->
+            <div class="stars-layer" id="starsLayer"></div>
+
+            <!-- Central light circle - opening phase -->
+            <div class="central-light" id="centralLight"></div>
+
+            <!-- Particles - phase 1 -->
+            <div class="particles-layer" id="particlesLayer" style="display: none;">
+                <div class="dna-helix"></div>
+            </div>
+
+            <!-- Organic shapes - phase 2 -->
+            <div class="organic-layer" id="organicLayer" style="display: none;"></div>
+
+            <!-- Complex life - phase 3 -->
+            <div class="life-layer" id="lifeLayer" style="display: none;"></div>
+
+            <!-- Cosmic mandala - phase 4 -->
+            <div class="mandala-layer" id="mandalaLayer" style="display: none;">
+                <div class="mandala">
+                    <div class="mandala-ring ring-1"></div>
+                    <div class="mandala-ring ring-2"></div>
+                    <div class="mandala-ring ring-3"></div>
+                    <div class="mandala-center"></div>
+                </div>
+                <div class="aurora-effect"></div>
+            </div>
+        </div>
+
+        <!-- Control button -->
+        <div class="controls">
+            <button class="start-button" id="startButton" onclick="startAnimation()">
+                Mulai Metamorfosis
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 0;
+        let isPlaying = false;
+        let timeouts = [];
+
+        const phases = [
+            'opening',
+            'particles', 
+            'organic',
+            'complex-life',
+            'cosmic-harmony',
+            'ending'
+        ];
+
+        const inspirationalMessages = [
+            "Setiap perjalanan dimulai dari titik cahaya kecil dalam kegelapan",
+            "Dari partikel sederhana, lahir keajaiban yang tak terbatas",
+            "Hidup berevolusi dengan keindahan dan transformasi yang menakjubkan",
+            "Setiap makhluk memiliki peran unik dalam simfoni kehidupan",
+            "Kita semua terhubung dalam harmoni kosmik yang sempurna",
+            "Akhir adalah awal yang baru. Metamorfosis tidak pernah berhenti"
+        ];
+
+        function showInspirationalText(phaseIndex) {
+            const textElement = document.getElementById('inspirationText');
+            textElement.textContent = inspirationalMessages[phaseIndex];
+            textElement.className = 'inspiration-text show';
+        }
+
+        function hideInspirationalText() {
+            const textElement = document.getElementById('inspirationText');
+            textElement.className = 'inspiration-text hide';
+        }
+
+        function clearAllTimeouts() {
+            timeouts.forEach(timeout => clearTimeout(timeout));
+            timeouts = [];
+        }
+
+        function renderStars() {
+            const starsLayer = document.getElementById('starsLayer');
+            starsLayer.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsLayer.appendChild(star);
+            }
+        }
+
+        function renderParticles() {
+            const particlesLayer = document.getElementById('particlesLayer');
+            
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = (50 + Math.cos(i * 0.5) * 20) + '%';
+                particle.style.top = (50 + Math.sin(i * 0.5) * 20) + '%';
+                particle.style.animationDelay = (i * 0.1) + 's';
+                particlesLayer.appendChild(particle);
+            }
+        }
+
+        function renderOrganicShapes() {
+            const organicLayer = document.getElementById('organicLayer');
+            const shapes = ['leaf', 'droplet', 'bubble'];
+            
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                shape.className = `organic-shape ${shapes[i % 3]}`;
+                shape.style.left = (20 + (i % 5) * 15) + '%';
+                shape.style.top = (20 + Math.floor(i / 5) * 20) + '%';
+                shape.style.animationDelay = (i * 0.3) + 's';
+                organicLayer.appendChild(shape);
+            }
+        }
+
+        function renderComplexLife() {
+            const lifeLayer = document.getElementById('lifeLayer');
+            const creatures = ['fish', 'butterfly', 'plant'];
+            
+            for (let i = 0; i < 12; i++) {
+                const creature = document.createElement('div');
+                creature.className = `creature ${creatures[i % 3]}`;
+                creature.style.left = (15 + (i % 4) * 20) + '%';
+                creature.style.top = (25 + Math.floor(i / 4) * 25) + '%';
+                creature.style.animationDelay = (i * 0.4) + 's';
+                lifeLayer.appendChild(creature);
+            }
+        }
+
+        function setPhase(phase) {
+            const animationStage = document.getElementById('animationStage');
+            animationStage.className = `animation-stage phase-${phases[phase]}`;
+            currentPhase = phase;
+
+            // Show inspirational text for current phase
+            if (phase < inspirationalMessages.length) {
+                showInspirationalText(phase);
+            }
+
+            // Show/hide layers based on phase
+            const particlesLayer = document.getElementById('particlesLayer');
+            const organicLayer = document.getElementById('organicLayer');
+            const lifeLayer = document.getElementById('lifeLayer');
+            const mandalaLayer = document.getElementById('mandalaLayer');
+
+            if (phase >= 1) {
+                particlesLayer.style.display = 'block';
+            }
+            if (phase >= 2) {
+                organicLayer.style.display = 'block';
+            }
+            if (phase >= 3) {
+                lifeLayer.style.display = 'block';
+            }
+            if (phase >= 4) {
+                mandalaLayer.style.display = 'flex';
+            }
+        }
+
+        function startAnimation() {
+            if (isPlaying) return;
+
+            isPlaying = true;
+            const startButton = document.getElementById('startButton');
+            startButton.textContent = 'Animasi Berjalan...';
+            startButton.disabled = true;
+
+            // Reset all layers
+            document.getElementById('particlesLayer').style.display = 'none';
+            document.getElementById('organicLayer').style.display = 'none';
+            document.getElementById('lifeLayer').style.display = 'none';
+            document.getElementById('mandalaLayer').style.display = 'none';
+
+            // Clear previous content
+            document.getElementById('particlesLayer').innerHTML = '<div class="dna-helix"></div>';
+            document.getElementById('organicLayer').innerHTML = '';
+            document.getElementById('lifeLayer').innerHTML = '';
+
+            // Render all elements
+            renderStars();
+            renderParticles();
+            renderOrganicShapes();
+            renderComplexLife();
+
+            clearAllTimeouts();
+
+            const timeline = [
+                { phase: 0, duration: 3000 },  // Opening (0-3s)
+                { phase: 1, duration: 4000 },  // Particles (3-7s)
+                { phase: 2, duration: 5000 },  // Organic (7-12s)
+                { phase: 3, duration: 6000 },  // Complex Life (12-18s)
+                { phase: 4, duration: 5000 },  // Cosmic Harmony (18-23s)
+                { phase: 5, duration: 2000 },  // Ending (23-25s)
+            ];
+
+            let totalTime = 0;
+
+            timeline.forEach(({ phase, duration }, index) => {
+                const timeout = setTimeout(() => {
+                    // Hide previous text before showing new phase
+                    if (index > 0) {
+                        hideInspirationalText();
+                        setTimeout(() => setPhase(phase), 500);
+                    } else {
+                        setPhase(phase);
+                    }
+                }, totalTime);
+                timeouts.push(timeout);
+                totalTime += duration;
+            });
+
+            // Reset after animation completes
+            const resetTimeout = setTimeout(() => {
+                hideInspirationalText();
+                setTimeout(() => {
+                    setPhase(0);
+                    isPlaying = false;
+                    startButton.textContent = 'Mulai Metamorfosis';
+                    startButton.disabled = false;
+                    
+                    // Hide all layers
+                    document.getElementById('particlesLayer').style.display = 'none';
+                    document.getElementById('organicLayer').style.display = 'none';
+                    document.getElementById('lifeLayer').style.display = 'none';
+                    document.getElementById('mandalaLayer').style.display = 'none';
+                    
+                    // Clear inspiration text
+                    document.getElementById('inspirationText').className = 'inspiration-text';
+                    document.getElementById('inspirationText').textContent = '';
+                }, 1000);
+            }, totalTime);
+            timeouts.push(resetTimeout);
+        }
+
+        // Initialize stars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStars();
+        });
+    </script>
+</body>
+</html>
